@@ -1,12 +1,9 @@
 package com.example;
 
+import io.micronaut.serde.annotation.Serdeable;
+
 import java.util.UUID;
 
-public record Account(UUID id, String name) {
-    public Account {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name cannot be blank");
-        }
-    }
-
-}
+@Serdeable.Serializable
+@Serdeable.Deserializable
+public record Account(UUID id, String name, String amount) {}

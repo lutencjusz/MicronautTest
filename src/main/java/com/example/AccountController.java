@@ -1,20 +1,29 @@
 package com.example;
 
+import io.micronaut.context.annotation.Parameter;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.*;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
 
 @Controller("/accounts")
 public class AccountController {
-    private Map<UUID, Account> accountStore = new ConcurrentHashMap<>();
 
-    @Get(produces = MediaType.TEXT_PLAIN)
-    public String AccountController() {
-        accountStore.put(UUID.randomUUID(), new Account(UUID.randomUUID(), "Test"));
-        return "AccountController created: " + accountStore;
+    private final AccountService accountService = new AccountService();
+
+    @Get(produces = MediaType.APPLICATION_JSON)
+    HttpResponse<Set<Account>> getAllAccounts() {
+        return HttpResponse.ok(accountService.getAllAccounts());
+    }
+
+    @Post(consumes = MediaType.APPLICATION_JSON)
+    HttpResponse<Account> addAccount(@Body Account account) {
+        return HttpResponse.created(accountService.addAccount(account));
+    }
+
+    @Get("/{id}")
+    HttpResponse<Account> getAccount(@Parameter String id) {
+        return HttpResponse.ok(accountService.getAccount(id));
     }
 }

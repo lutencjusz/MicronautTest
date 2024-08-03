@@ -32,6 +32,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.javamoney</groupId>
+      <artifactId>moneta</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server-netty</artifactId>
       <scope>compile</scope>
