@@ -2,8 +2,10 @@ package com.example;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import io.micronaut.http.exceptions.HttpStatusException;
 
 import java.util.Set;
 
@@ -22,8 +24,9 @@ public class AccountController {
         return HttpResponse.created(accountService.addAccount(account));
     }
 
-    @Get("/{id}")
-    HttpResponse<Account> getAccount(@Parameter String id) {
-        return HttpResponse.ok(accountService.getAccount(id));
+    @Get("/{name}")
+    Account getAccount(@Parameter String name) {
+        return accountService.getAccountByName(name)
+                .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Account not found"));
     }
 }

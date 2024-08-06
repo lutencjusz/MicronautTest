@@ -1,15 +1,12 @@
 package com.example;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class AccountService {
     private Set<Account> accounts = new HashSet<>();
 
     public AccountService() {
-        accounts.add(new Account(UUID.randomUUID(), "Test name 1", "200"));
+        accounts.add(new Account(UUID.randomUUID(), "Test_name_1", "200"));
         accounts.add(new Account(UUID.randomUUID(), "Test name 2", "300"));
     }
 
@@ -22,15 +19,10 @@ public class AccountService {
         return account;
     }
 
-    public Account getAccount(String id) {
-        try {
-            return accounts.stream()
-                    .filter(account -> account.id().toString().equals(id))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Account not found"));
-        } catch (IllegalArgumentException e) {
-            System.out.println("getAccount: " + e.getMessage());
-            return new Account(null, null, null);
-        }
+    public Optional<Account> getAccountByName(String name) {
+        return Optional.ofNullable(accounts.stream()
+                .filter(account -> account.name().equals(name))
+                .findFirst()
+                .orElse(null));
     }
 }
