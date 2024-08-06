@@ -23,7 +23,7 @@ class DemoTest {
     HttpClient client;
 
     @Test
-    void testItWorks() {
+    void testAccountControllerGetAllAccountsAsString() {
         String response = client.toBlocking().retrieve("/accounts");
         assertNotNull(response);
         assertTrue(response.contains("Test_name_1"));
@@ -31,7 +31,7 @@ class DemoTest {
     }
 
     @Test
-    void testAccountControllerGetAllAccounts() {
+    void testAccountControllerGetAllAccountsAsHttpResponse() {
         HttpResponse<Object> response = client.toBlocking().exchange("/accounts");
         assertEquals(HttpStatus.OK, response.getStatus());
     }
