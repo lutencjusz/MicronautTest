@@ -53,9 +53,12 @@ class DemoTest {
     @Test
     void testAccountControllerGetAccountNegative() {
         try {
-            client.toBlocking().exchange(HttpRequest.GET("/accounts/notfound"));
+            HttpResponse<Account> response = client.toBlocking().exchange(HttpRequest.GET("/accounts/notfound"));
+            assertEquals(HttpStatus.OK, response.getStatus(), "Should return 200");
+            System.out.println("Status: " + response.getStatus());
         } catch (HttpClientResponseException e) {
-            assertEquals(HttpStatus.NOT_FOUND, e.getStatus());
+            assertEquals(HttpStatus.NOT_FOUND, e.getStatus(), "Should return 404");
+            System.out.println("Status: " + e.getMessage());
         }
     }
 
