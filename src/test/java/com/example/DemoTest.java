@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @MicronautTest
 class DemoTest {
-ó
+
     @Inject
     @Client("/")
     HttpClient client;
